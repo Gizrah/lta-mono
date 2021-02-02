@@ -1,0 +1,22 @@
+@import '../../../theme/mixins';
+
+ion-item {
+	--inner-padding-end: 0;
+	--background: transparent;
+}
+
+ion-list {
+	ion-item {
+		ion-label {
+			&.label-alt {
+				@include propvar(color, color-secondary-shade, 0.7);
+				font-size: 0.9em;
+			}
+
+			.form-required {
+				font-weight: 600;
+				@include propvar(color, color-danger);
+			}
+		}
+	}
+}

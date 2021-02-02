@@ -1,0 +1,20 @@
+.home-projects {
+	--padding-start: 0;
+	--inner-padding-end: 0;
+
+	h1 {
+		margin-left: 12px;
+	}
+
+	ion-select {
+		margin-right: 6px;
+	}
+}
+
+ion-content {
+	&.ios {
+		ion-fab {
+			display: none;
+		}
+	}
+}

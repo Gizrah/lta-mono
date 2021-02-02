@@ -1,0 +1,7 @@
+{
+  "name": "lyceo-test",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

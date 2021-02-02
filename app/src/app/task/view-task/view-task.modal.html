@@ -1,0 +1,86 @@
+<ion-header [translucent]="true">
+	<ion-toolbar>
+		<ion-title> {{ task?.name }} </ion-title>
+		<ion-buttons slot="start">
+			<ion-button (click)="yeet()">
+				<ion-icon name="trash-outline" color="danger"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+		<ion-buttons slot="end">
+			<ion-button (click)="dismiss()">
+				<ion-icon name="close-outline"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" *ngIf="task">
+	<ion-item>
+		<div class="view-task-model-item">
+			<ion-label class="ion-text-wrap">
+				<h3>{{ 'common.app.project' | translate }}</h3>
+				<div class="tag" *ngIf="task.project?.name">
+					<div class="tag-project">{{ task.project.name }}</div>
+				</div>
+			</ion-label>
+
+			<ion-label class="ion-text-wrap label-top">
+				<h3>{{ 'common.task.createdBy' | translate }}</h3>
+				<span>
+					<div>{{ task.createdBy.name }}</div>
+					<div class="date">{{ task.createdAt }}</div>
+				</span>
+			</ion-label>
+
+			<ion-label class="ion-text-wrap" *ngIf="task.icons?.priority">
+				<h3>{{ 'common.task.priority' | translate }}</h3>
+				<div class="tag-inline">
+					<div class="tag-prio tagicon-{{ task.icons.priority }}">
+						<ion-icon [name]="task.icons.priority" size="small"></ion-icon>
+					</div>
+
+					{{ 'common.task.' + task.priority | translate }}
+				</div>
+			</ion-label>
+
+			<ion-label class="ion-text-wrap" *ngIf="task.icons?.state">
+				<h3>{{ 'common.task.state' | translate }}</h3>
+				<div class="tag-inline">
+					<div class="tag-state tagicon-{{ task.icons.state }}">
+						<ion-icon [name]="task.icons.state" size="small"></ion-icon>
+					</div>
+
+					{{ 'common.task.' + task.state | translate }}
+				</div>
+			</ion-label>
+
+			<ion-label class="ion-text-wrap" *ngIf="task.estimate">
+				<h3>{{ 'common.task.estimate' | translate }}</h3>
+				<div class="tag-inline">
+					<div class="tag-estimate">{{ task.estimate }}</div>
+				</div>
+			</ion-label>
+
+			<ion-label class="ion-text-wrap">
+				<ng-template [ngIf]="task.assignee?.name">
+					<h3>{{ 'common.task.assignee' | translate }}</h3>
+					<div class="tag">
+						<div class="tag-assignee">
+							<ion-icon name="person-circle-outline" size="small"></ion-icon>
+							{{ task.assignee.name }}
+						</div>
+					</div>
+				</ng-template>
+
+				<span *ngIf="!task.assignee?.name" class="unassigned">
+					{{ 'common.task.unassigned' | translate }}
+				</span>
+			</ion-label>
+		</div>
+	</ion-item>
+
+	<div class="ion-padding">
+		<h1>{{ task.name }}</h1>
+		<p>{{ task.description }}</p>
+	</div>
+</ion-content>

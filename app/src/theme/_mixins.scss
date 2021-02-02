@@ -1,0 +1,84 @@
+@import 'lists';
+@import 'functions';
+
+@mixin propvar($property, $var, $o: null, $important: null) {
+	$opacity: hasValue($o, 1);
+	$color: getColor($var, $opacity);
+	$css: getCssVar($var, $opacity, true);
+	$cssrgb: getCssVar($var, $opacity);
+
+	@if $important == null {
+		#{$property}: #{$color};
+		#{$property}: #{$css};
+		#{$property}: #{$cssrgb};
+	} @else {
+		#{$property}: #{$color} !important;
+		#{$property}: #{$css} !important;
+		#{$property}: #{$cssrgb} !important;
+	}
+}
+
+@mixin gradient($f: null, $t: null, $o: null, $d: null) {
+	$from: hasValue($f, color-warning);
+	$to: hasValue($t, color-danger);
+	$opacity: hasValue($o, 0.1);
+	$direction: hasValue($d, to right);
+
+	$colorF: getColor($from, $opacity);
+	$colorT: getColor($to, $opacity);
+
+	background-image: -moz-linear-gradient($direction, $colorF 0%, $colorT 100%);
+	background-image: -webkit-linear-gradient($direction, $colorF 0%, $colorT 100%);
+	background-image: linear-gradient($direction, $colorF 0%, $colorT 100%);
+}
+
+@mixin shade($c: null, $o: null, $x: null, $y: null, $s: null) {
+	$var: hasValue($c, null);
+	$opacity: hasValue($o, 0.075);
+	$axisX: hasValue($x, 0);
+	$axisY: hasValue($y, 0.1875rem);
+	$spread: hasValue($s, 0.1875rem);
+
+	$color: rgba(0, 0, 0, $opacity);
+
+	@if $var {
+		$color: rgba(map-get($vars, $var), $opacity);
+	}
+
+	box-shadow: $axisX $axisY $spread $color;
+}
+
+@mixin pulse($c: null, $s: null, $t: null, $p: null) {
+	$color: hasValue($c, color-primary);
+	$spread: hasValue($s, 0.75em);
+	$time: hasValue($t, 2s);
+	$pulses: hasValue($p, infinite);
+
+	$base: getCssVar($color, 1);
+	$initial: getCssVar($color, 0.7);
+	$faded: getCssVar($color, 0);
+
+	@keyframes pulse-self {
+		0% {
+			transform: scale(1);
+			box-shadow: 0 0 0 0 #{$initial};
+		}
+
+		70% {
+			transform: scale(1.05);
+			box-shadow: 0 0 0 #{$spread} #{$faded};
+		}
+
+		100% {
+			transform: scale(1);
+			box-shadow: 0 0 0 #{$spread} #{$faded};
+		}
+	}
+
+	box-shadow: 0 0 0 0 #{$base};
+	background: $base;
+
+	animation-name: pulse-self;
+	animation-duration: #{$time};
+	animation-iteration-count: $pulses;
+}

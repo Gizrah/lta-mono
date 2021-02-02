@@ -1,0 +1,101 @@
+@import '../../../theme/mixins';
+
+ion-item {
+	--inner-padding-end: 0;
+	--background: transparent;
+}
+
+.view-task-model-item {
+	padding-bottom: 6px;
+	margin-bottom: 6px;
+	width: 100%;
+}
+
+ion-label {
+	margin-top: 12px;
+	padding-bottom: 6px;
+	margin-bottom: 0;
+	width: 100%;
+	display: grid !important;
+	justify-content: flex-start;
+	align-items: center;
+
+	&.label-top {
+		align-items: flex-start;
+	}
+
+	grid-template-columns: 4fr 6fr;
+
+	h2,
+	h3 {
+		display: inline-block;
+		margin-right: 6px;
+	}
+
+	h2 {
+		font-weight: 600;
+	}
+
+	h3 {
+		font-weight: 600 !important;
+	}
+
+	.tag {
+		display: inline-block;
+		margin: 0;
+
+		& > * {
+			margin: 0;
+		}
+
+		&-inline {
+			display: flex;
+			justify-content: flex-start;
+			align-items: center;
+			font-size: 0.9em;
+
+			.tag-state,
+			.tag-prio {
+				margin-right: 6px;
+
+				@include shade();
+			}
+		}
+	}
+
+	span {
+		display: inline-block;
+		font-size: 0.9em;
+		padding-left: 0.2em;
+
+		&.unassigned {
+			grid-column: 1 / span 2;
+			padding-left: 0;
+		}
+	}
+}
+
+.date {
+	font-size: 0.7em;
+}
+
+ion-item ion-icon {
+	font-size: 42px;
+	margin-right: 8px;
+}
+
+ion-item ion-note {
+	font-size: 15px;
+	margin-right: 12px;
+	font-weight: normal;
+}
+
+h1 {
+	margin: 0;
+	font-weight: bold;
+	font-size: 22px;
+}
+
+p {
+	line-height: 22px;
+}

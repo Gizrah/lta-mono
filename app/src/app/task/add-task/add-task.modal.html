@@ -1,0 +1,164 @@
+<ion-header [translucent]="true">
+	<ion-toolbar>
+		<ion-buttons slot="primary">
+			<ion-button (click)="save()" [disabled]="!group.valid || active">
+				<ion-icon name="checkmark-outline"></ion-icon>
+
+				{{ 'common.app.save' | translate }}
+			</ion-button>
+		</ion-buttons>
+		<ion-buttons slot="start">
+			<ion-button (click)="dismiss()">
+				<ion-icon name="close-outline"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+	<form (ngSubmit)="save()" [formGroup]="group">
+		<ion-list>
+			<ng-container
+				*ngTemplateOutlet="inputOrSelect; context: {
+					enabled: group.get(['project', 'name']).enabled,
+					groupname: 'project',
+					suffix: 'project',
+					items: projects$ | async
+				}"
+			></ng-container>
+
+			<ng-container
+				*ngTemplateOutlet="inputOrSelect; context: {
+					enabled: group.get(['createdBy', 'name']).enabled,
+					groupname: 'createdBy',
+					suffix: 'user',
+					items: users$ | async
+				}"
+			></ng-container>
+
+			<ion-item lines="full">
+				<ng-container
+					*ngTemplateOutlet="itemLabel; context: { path: 'name', name: 'common.add.name' }"
+				></ng-container>
+				<ion-input type="text" formControlName="name" name="name"></ion-input>
+				<ng-container
+					*ngTemplateOutlet="tagIcon; context: {name: 'chatbox-ellipses' }"
+				></ng-container>
+			</ion-item>
+
+			<ion-item lines="full">
+				<ng-container
+					*ngTemplateOutlet="itemLabel; context: { path: 'description', name: 'common.add.description' }"
+				></ng-container>
+				<ion-textarea formControlName="description" name="name" rows="6"></ion-textarea>
+				<ng-container
+					*ngTemplateOutlet="tagIcon; context: {name: 'newspaper' }"
+				></ng-container>
+			</ion-item>
+
+			<ion-item lines="full">
+				<ng-container
+					*ngTemplateOutlet="itemLabel; context: { path: 'priority', name: 'common.task.priority' }"
+				></ng-container>
+				<ion-select formControlName="priority" interface="popover">
+					<ion-select-option value="none">
+						{{ 'common.task.none' | translate }}
+					</ion-select-option>
+					<ion-select-option value="low">
+						{{ 'common.task.low' | translate }}
+					</ion-select-option>
+					<ion-select-option value="high">
+						{{ 'common.task.high' | translate }}
+					</ion-select-option>
+				</ion-select>
+				<ng-container *ngTemplateOutlet="tagIcon; context: {name: 'alert' }"></ng-container>
+			</ion-item>
+
+			<ion-item lines="full">
+				<ng-container
+					*ngTemplateOutlet="itemLabel; context: { path: 'state', name: 'common.task.state' }"
+				></ng-container>
+				<ion-select formControlName="state" interface="popover">
+					<ion-select-option value="backlog">
+						{{ 'common.task.backlog' | translate }}
+					</ion-select-option>
+					<ion-select-option value="scheduled">
+						{{ 'common.task.scheduled' | translate }}
+					</ion-select-option>
+					<ion-select-option value="done">
+						{{ 'common.task.done' | translate }}
+					</ion-select-option>
+				</ion-select>
+				<ng-container
+					*ngTemplateOutlet="tagIcon; context: {name: 'checkmark' }"
+				></ng-container>
+			</ion-item>
+
+			<ng-container
+				*ngTemplateOutlet="inputOrSelect; context: {
+					enabled: group.get(['assignee', 'name']).enabled,
+					groupname: 'assignee',
+					suffix: 'user',
+					items: users$ | async
+				}"
+			></ng-container>
+		</ion-list>
+	</form>
+</ion-content>
+
+<ng-template #itemLabel let-path="path" let-name="name">
+	<ion-label position="floating">
+		{{ name | translate }}<span
+			class="form-required"
+			*ngIf="group.get(path).hasError('required')"
+			>*</span
+		>
+	</ion-label>
+</ng-template>
+
+<ng-template #tagIcon let-name="name">
+	<div class="tag-end" slot="end">
+		<div class="tag-generic">
+			<ion-icon [name]="name" slot="icon-only" size="small"></ion-icon>
+		</div>
+	</div>
+</ng-template>
+
+<ng-template
+	#inputOrSelect
+	let-enabled="enabled"
+	let-groupname="groupname"
+	let-suffix="suffix"
+	let-items="items"
+>
+	<ng-container [formGroup]="group.get(groupname)">
+		<ion-item [lines]="enabled ? 'none' : 'full'" formGroupName="selected">
+			<ng-container
+				*ngTemplateOutlet="itemLabel; context: { path: [groupname, 'name'], name: 'common.add.' + groupname }"
+			></ng-container>
+			<ion-select
+				formControlName="id"
+				interface="popover"
+				[placeholder]="'common.add.select' + suffix | translate"
+			>
+				<ion-select-option [value]="null">
+					{{ 'common.app.none' | translate }}
+				</ion-select-option>
+				<ion-select-option *ngFor="let item of items" [value]="item.id">
+					{{ item.name }}
+				</ion-select-option>
+			</ion-select>
+
+			<ng-container
+				*ngTemplateOutlet="tagIcon; context: {name: groupname === 'project' ? 'bookmark' : groupname === 'assignee' ? 'person-circle' : 'person' }"
+			></ng-container>
+		</ion-item>
+
+		<ion-item lines="full" *ngIf="enabled">
+			<ion-label position="floating" class="label-alt">
+				{{ 'common.add.new' + suffix | translate }}
+			</ion-label>
+			<ion-input type="text" formControlName="name" name="name" clearInput></ion-input>
+		</ion-item>
+	</ng-container>
+</ng-template>

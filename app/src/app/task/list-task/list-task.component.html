@@ -1,0 +1,34 @@
+<ion-item *ngIf="task" [detail]="false" button (click)="showTask(task)">
+	<ion-label class="ion-text-wrap">
+		<h3>
+			<div class="tag" *ngIf="task.project?.name">
+				<div class="tag-project">{{ task.project.name }}</div>
+			</div>
+
+			<span class="date">
+				<ion-note>{{ task.createdAt }}</ion-note>
+				<ion-icon name="chevron-forward" size="small" *ngIf="isIos()"></ion-icon>
+			</span>
+		</h3>
+		<h2>{{ task.name }}</h2>
+		<p>
+			{{ task.description }}
+		</p>
+		<div
+			class="tag tag-below"
+			*ngIf="task.icons?.state || task.icons?.priority || task.assignee?.name"
+		>
+			<div class="tag-state tagicon-{{ task.icons?.state }}" *ngIf="task.icons?.state">
+				<ion-icon [name]="task.icons.state" size="small"></ion-icon>
+			</div>
+			<div class="tag-prio tagicon-{{ task.icons?.priority }}" *ngIf="task.icons?.priority">
+				<ion-icon [name]="task.icons.priority" size="small"></ion-icon>
+			</div>
+
+			<div class="tag-assignee" *ngIf="task.assignee?.name">
+				<ion-icon name="person-circle-outline" size="small"></ion-icon>
+				{{ task.assignee.name }}
+			</div>
+		</div>
+	</ion-label>
+</ion-item>

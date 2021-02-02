@@ -1,0 +1,32 @@
+<ion-header [translucent]="true">
+	<ion-toolbar>
+		<ion-title> {{ 'common.app.title' | translate }} </ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ng-template [ngIf]="mobile">
+	<ion-content [fullscreen]="true">
+		<app-task-list></app-task-list>
+	</ion-content>
+</ng-template>
+
+<ng-template [ngIf]="!mobile">
+	<ion-content [fullscreen]="true">
+		<div class="home-main">
+			<app-task-list></app-task-list>
+			<ng-container
+				*ngTemplateOutlet="showTask; context: { task: task$ | async }"
+			></ng-container>
+		</div>
+	</ion-content>
+</ng-template>
+
+<ng-template #showTask let-task="task">
+	<app-view-task
+		class="home-secondary"
+		[task]="task"
+		[mobile]="mobile"
+		slot="end"
+		*ngIf="task"
+	></app-view-task>
+</ng-template>

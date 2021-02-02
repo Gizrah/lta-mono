@@ -1,0 +1,36 @@
+@import 'lists';
+@import 'functions';
+
+:root {
+	@each $name, $value in $defaults {
+		--#{$name}: #{$value};
+	}
+
+	@each $name, $color in $light {
+		--ion-#{$name}: #{$color};
+		--ion-#{$name}-rgb: #{hexToRGB($color)};
+	}
+
+	@media (prefers-color-scheme: dark) {
+		body {
+			@each $name, $color in $dark {
+				--ion-#{$name}: #{$color};
+				--ion-#{$name}-rgb: #{hexToRGB($color)};
+			}
+		}
+
+		.ios body {
+			@each $name, $color in $dark-ios {
+				--ion-#{$name}: #{$color};
+				--ion-#{$name}-rgb: #{hexToRGB($color)};
+			}
+		}
+
+		.md body {
+			@each $name, $color in $dark-md {
+				--ion-#{$name}: #{$color};
+				--ion-#{$name}-rgb: #{hexToRGB($color)};
+			}
+		}
+	}
+}

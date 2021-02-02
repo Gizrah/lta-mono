@@ -1,0 +1,41 @@
+{
+	"common": {
+		"app": {
+			"ok": "Ok",
+			"cancel": "Annuleer",
+			"title": "Taken",
+			"list": "Takenlijst",
+			"back": "Terug",
+			"project": "Project",
+			"default": "Toon alle",
+			"none": "Geen",
+			"save": "Opslaan"
+		},
+		"task": {
+			"assignee": "Toegekend aan",
+			"unassigned": "Deze taak is nog niet aan iemand toegekend.",
+			"createdBy": "Aangemaakt door",
+			"priority": "Prioriteit",
+			"estimate": "Schatting",
+			"state": "Status",
+			"time": "Tijd",
+			"done": "Klaar",
+			"scheduled": "Ingepland",
+			"backlog": "Op backlog",
+			"high": "Hoog",
+			"low": "Laag",
+			"none": "Geen"
+		},
+		"add": {
+			"createdBy": "Toegevoegd door",
+			"newuser": "Nieuwe gebruiker",
+			"selectuser": "Bestaande gebruiker",
+			"name": "Taak onderwerp",
+			"description": "Taakomschrijving",
+			"project": "Kies project",
+			"newproject": "Nieuw project",
+			"selectproject": "Bestaand project",
+			"assignee": "Toekennen aan"
+		}
+	}
+}

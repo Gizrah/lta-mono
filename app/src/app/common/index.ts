@@ -1,0 +1,7 @@
+export { ExMap } from './exmap.class'
+export { asArray } from './asarray'
+export { hasValue } from './hasvalue'
+export { parseBool, isNaB } from './boolean'
+export { rndStr, rndNum } from './random'
+export { isPrimitive } from './isprimitive'
+export { dolog } from './log'

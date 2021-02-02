@@ -1,0 +1,198 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import '~@ionic/angular/css/core.css';
+
+/* Basic CSS for apps built with Ionic */
+@import '~@ionic/angular/css/normalize.css';
+@import '~@ionic/angular/css/structure.css';
+@import '~@ionic/angular/css/typography.css';
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import '~@ionic/angular/css/padding.css';
+@import '~@ionic/angular/css/float-elements.css';
+@import '~@ionic/angular/css/text-alignment.css';
+@import '~@ionic/angular/css/text-transformation.css';
+@import '~@ionic/angular/css/flex-utils.css';
+
+@import './theme/lists';
+@import './theme/functions';
+@import './theme/mixins';
+@import './theme/vars';
+
+.lta-desktop {
+	ion-content {
+		div.home-main {
+			@include gradient();
+			display: grid;
+			grid-template-columns: 3fr 7fr;
+			column-gap: 12px;
+			height: 100%;
+			width: 100%;
+			padding: 14px;
+			box-sizing: border-box;
+
+			app-task-list,
+			app-view-task {
+				@include shade();
+				display: block;
+			}
+
+			app-task-list {
+				ion-content {
+					--offset-top: 0px !important;
+					--offset-bottom: 0px !important;
+				}
+
+				.home-projects {
+					min-height: var(--min-height);
+				}
+			}
+
+			app-view-task {
+				overflow: hidden;
+				ion-content {
+					--offset-top: 0px !important;
+					--offset-bottom: -56px !important;
+				}
+			}
+		}
+	}
+}
+
+.tag {
+	display: inline-block;
+	margin: -0.25em 0 0.25em -0.25em;
+
+	&-below {
+		margin: 0.25em 0 0 -0.25em;
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+	}
+
+	&-end {
+		margin-top: 7px;
+		margin-right: 7px;
+
+		& > * {
+			position: relative;
+			border-radius: 100%;
+			@include shade();
+		}
+	}
+
+	& > *,
+	&-below > * {
+		margin: 0.25em;
+		display: inline-block;
+		font-size: 0.9em;
+		@include shade();
+	}
+
+	&-project {
+		margin-left: 0;
+		@include gradient();
+		margin-right: auto;
+		padding: 0.2em 0.4em;
+		border-radius: 0.5em;
+		@include propvar(color, color-light, 0.7);
+	}
+
+	&-assignee {
+		display: inline-flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 0.2em 0.4em;
+		border-radius: 0.5em;
+		font-size: 0.8em;
+		border: 1px solid getColor(color-primary, 0.7);
+		@include propvar(color, color-primary, 0.7);
+		@include propvar(background-color, color-primary-contrast);
+
+		ion-icon {
+			margin-right: 0.2em;
+		}
+	}
+
+	&-state,
+	&-prio,
+	&-estimate {
+		position: relative;
+		width: 1.75em;
+		height: 1.75em;
+		border-radius: 100%;
+		box-sizing: border-box;
+	}
+
+	&-state,
+	&-prio,
+	&-generic {
+		ion-icon {
+			position: absolute;
+			top: calc(50% - 0.5em);
+			left: calc(50% - 0.5em);
+		}
+	}
+
+	&-state {
+		&.tagicon {
+			&-list-circle-outline {
+				@include gradient(color-primary-shade, color-primary-tint, 0.25);
+			}
+			&-calendar-outline {
+				@include gradient(color-warning-shade, color-warning-tint);
+			}
+			&-checkmark-done-circle-outline {
+				@include gradient(color-success-shade, color-success-tint);
+			}
+			&-help-circle-outline {
+				@include gradient(color-medium-shade, color-medium-tint);
+			}
+		}
+
+		ion-icon {
+			@include propvar(color, color-light, 0.7);
+		}
+	}
+
+	&-prio {
+		&.tagicon {
+			&-arrow-up-circle-outline {
+				@include gradient(color-danger-shade, color-danger-tint, 1);
+			}
+			&-arrow-down-circle-outline {
+				@include gradient(color-warning-shade, color-warning-tint, 1);
+			}
+		}
+
+		ion-icon {
+			color: white;
+		}
+	}
+
+	&-estimate {
+		display: inline-flex;
+		justify-content: center;
+		align-items: center;
+		color: white;
+		@include gradient(color-primary, color-primary-tint, 0.8);
+	}
+
+	&-generic {
+		height: 24px;
+		width: 24px;
+		color: white;
+		@include gradient(color-success-shade, color-secondary-shade, 0.8, 75deg);
+	}
+}

@@ -1,0 +1,119 @@
+@use "sass:string";
+@use "sass:list";
+
+@import 'lists';
+
+@function hexToRGB($hex) {
+	@return red($hex), green($hex), blue($hex);
+}
+
+@function getColor($colorOrMap, $opacity: 1) {
+	$color: $colorOrMap;
+	$valuetype: type-of($colorOrMap);
+
+	@if $valuetype == string {
+		@if (null != map-get($light, $colorOrMap)) {
+			$color: map-get($light, $colorOrMap);
+		}
+	}
+
+	@if $valuetype == color {
+		@if $color == transparent {
+			$color: transparent;
+		} @else {
+			$color: $colorOrMap;
+		}
+	}
+
+	@if type-of($color) == color {
+		$color: transparentize($color, 1 - $opacity);
+	} @else {
+		$color: orange;
+	}
+
+	@return $color;
+}
+
+@function getCssVar($hashOrName, $opacity: 1, $norgb: null) {
+	$name: $hashOrName;
+	$valuetype: type-of($hashOrName);
+
+	@if $valuetype == string and (null != map-get($light, $hashOrName)) {
+		$name: $hashOrName;
+	} @else if $valuetype == color {
+		$name: stringReplace($hashOrName, '#', '');
+	} @else {
+		$name: $hashOrName;
+	}
+
+	@if $norgb == null {
+		@return rgba(var(#{'--ion-#{$name}-rgb'}), $opacity);
+	} @else {
+		@return var(#{'--ion-#{$name}'});
+	}
+}
+
+@function stringReplace($string, $search, $replace: '') {
+	$valuetype: type-of($string);
+	$index: null;
+	$parsed: $string;
+
+	@if $valuetype == string {
+		$index: string.index($string, $search);
+	}
+
+	@if $index {
+		$sliced: string.slice($string, 1, $index - 1);
+		$joined: $sliced + $replace;
+		$findmore: stringReplace($joined, $search, $replace);
+		$parsed: $joined + findmore;
+	}
+
+	@return $parsed;
+}
+
+@function hasValue($val, $default) {
+	@if $val == null {
+		@return $default;
+	} @else {
+		@return $val;
+	}
+}
+
+@function listsize($m: 2rem, $c: 2, $f: rem, $w: null) {
+	$margin: hasValue($m, 2rem);
+	$column: hasValue($c, 2);
+	$gap: $column - 1;
+	$format: hasValue($f, rem);
+	$width: hasValue($w, 100vw);
+
+	$columnsize: calc((#{$width} - #{$margin} - #{$gap}#{$format}) / #{$column});
+
+	@return $columnsize;
+}
+
+@function listHasValue($list, $default) {
+	@if $list == null {
+		@return $default;
+	} @else {
+		@return $list;
+	}
+}
+
+@function listIndexOr($list, $index, $fallback: null) {
+	$length: list.length($list);
+
+	@if $length >= $index {
+		@return list.nth($list, $index);
+	} @else {
+		@if $fallback == null {
+			@return null;
+		} @else {
+			@if $length >= $fallback {
+				@return list.nth($list, $fallback);
+			} @else {
+				@return null;
+			}
+		}
+	}
+}
